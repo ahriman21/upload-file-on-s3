@@ -31,4 +31,18 @@ s3.upload_file(
 )
 # The function is upload_file and you only have to change the order of the parameters from the download function
 
-# --------------------------------------------------------------END--------------------------------------------------------------------------------
+# --------------------------------------------------------------GET LIST OF CONTENTS FORM BUCKET-----------------------------------------------
+
+from boto3 import client
+
+conn = client('s3')  # again assumes boto.cfg setup, assume AWS S3
+for key in conn.list_objects(Bucket='bucket_name')['Contents']:
+    print(key['Key'])
+# another way :
+import boto3
+s3 = boto3.resource('s3')
+
+my_bucket = s3.Bucket('bucket_name')
+
+for file in my_bucket.objects.all():
+    print(file.key)
